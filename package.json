@@ -2,23 +2,41 @@
   "name": "full-stack-nextjs",
   "version": "0.1.0",
   "private": true,
+  "author": "Jeremy Kirkham",
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently 'npm run dev:web' 'npm run dev:worker'",
+    "dev:web": "next dev",
+    "dev:worker": "tsc --project tsconfig.worker.json && wait-on .backend/worker.js && DATABASE_URL=postgresql://postgres@localhost:5432/mydb node .backend/worker.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^3.13.0",
+    "apollo-server-micro": "^3.6.7",
+    "bullmq": "^1.81.1",
+    "dotenv": "^16.0.0",
+    "graphql": "^16.4.0",
+    "ioredis": "^5.0.4",
     "next": "12.1.6",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "throng": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "17.0.31",
     "@types/react": "18.0.8",
     "@types/react-dom": "18.0.3",
+    "@types/throng": "^5.0.3",
+    "@types/uuid": "^8.3.4",
+    "concurrently": "^7.1.0",
     "eslint": "8.14.0",
     "eslint-config-next": "12.1.6",
-    "typescript": "4.6.4"
-  }
+    "prisma": "^3.13.0",
+    "typescript": "4.6.4",
+    "wait-on": "^6.0.1"
+  },
+  "cacheDirectories": [
+    ".next/cache"
+  ]
 }

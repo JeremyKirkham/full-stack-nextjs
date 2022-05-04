@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "outDir": ".backend",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "incremental": true
+  },
+  "include": ["workers/**/*"],
+  "exclude": ["node_modules"]
+}
