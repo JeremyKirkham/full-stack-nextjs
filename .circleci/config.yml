@@ -1,0 +1,30 @@
+version: 2.1
+# Executors
+executors:
+  base:
+    docker:
+      - image: cypress/browsers:node14.16.0-chrome90-ff88 # this is our primary docker image, where step commands run.
+        environment:
+          DATABASE_URL: postgresql://postgres:password@localhost/myapp_circle
+      - image: circleci/postgres:9.5-alpine
+        environment: # add POSTGRES environment variables.
+          POSTGRES_PASSWORD: password
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: myapp_circle
+
+# Orbs
+orbs:
+  node: circleci/node@5.0.0
+
+# Commands
+
+# Jobs
+
+# Workflows
+workflows:
+  test:
+    jobs:
+      - node/run:
+          npm-run: lint
+      - node/run:
+          npm-run: build
